@@ -55,10 +55,13 @@ Custom payloads, all in the `figura` namespace:
 ## Building
 
 ```bash
-./gradlew build
+./gradlew chiseledBuild            # all supported versions, all loaders
+./gradlew chiseledBuildFabric      # one loader, all versions
+./gradlew chiseledBuild1_21_1      # one version, all loaders (task per version)
+./gradlew :fabric:1.21.1:build     # one version, one loader
 ```
 
-Jars land in `fabric/build/libs`, `forge/build/libs`, `neoforge/build/libs`.
+Jars land in `build/libs/<mod.version>/<loader>/`.
 
 ## License
 

@@ -2,6 +2,12 @@
 .gradle/
 build/
 
+# Kotlin DSL buildscript caches (buildSrc)
+.kotlin/
+
+# Architectury transformer cache
+.architectury-transformer/
+
 # Vendored compile-time dependency (downloaded in CI, see workflows)
 .libs/
 
