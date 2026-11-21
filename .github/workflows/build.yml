@@ -54,6 +54,10 @@ jobs:
             LOADERS=$(grep -E '^enabled_platforms' gradle.properties | cut -d'=' -f2 | tr -d ' ')
             LOADERS=$(echo "$LOADERS" | tr ',' ' ')
           fi
+          if [ -z "$VERSIONS" ] || [ -z "$LOADERS" ]; then
+            echo "ERROR: failed to resolve versions or loaders"
+            exit 1
+          fi
           echo "Versions: $VERSIONS"
           echo "Loaders:  $LOADERS"
           echo "VERSIONS=$VERSIONS" >> "$GITHUB_ENV"
@@ -107,16 +111,25 @@ jobs:
           echo "== running ${TASK}"
           ./gradlew "${TASK}" --no-daemon
 
+          set -e
+          shopt -s nullglob
           for mc in $VERSIONS; do
             for loader in $LOADERS; do
-              src=$(ls build/libs/*/figura-relay-*+${mc}-${loader}.jar | head -n 1)
-              cp "$src" "dist/"
+              found=()
+              for src in build/libs/*/*/figura-relay-*+${mc}-${loader}.jar; do
+                if [[ "$src" != *"sources.jar" ]]; then found+=("$src"); fi
+              done
+              if [ ${#found[@]} -eq 0 ]; then
+                echo "ERROR: no jar for MC ${mc} / ${loader} in build/libs"; exit 1
+              fi
+              cp "${found[0]}" "dist/"
               if [ -n "$TAG" ]; then
                 mkdir -p release
-                cp "$src" "release/figura-relay-${TAG}-mc${mc}-${loader}.jar"
+                cp "${found[0]}" "release/figura-relay-${TAG}-mc${mc}-${loader}.jar"
               fi
             done
           done
+          shopt -u nullglob
           ls -la dist/
 
       - name: Upload build artifacts
