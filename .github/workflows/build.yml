@@ -1,9 +1,6 @@
 name: Build
 
 on:
-  push:
-    branches: [ "master", "main" ]
-  pull_request:
   workflow_dispatch:
     inputs:
       tag:
@@ -51,9 +48,6 @@ jobs:
       - name: Build
         run: ./gradlew build --no-daemon
 
-      - name: Remove downloaded dependencies
-        run: rm -rf .libs/
-
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -84,3 +78,6 @@ jobs:
           name: ${{ inputs.tag }}
           generate_release_notes: true
           files: release/*.jar
+
+      - name: Cleanup
+        run: rm -rf .libs/ release/
