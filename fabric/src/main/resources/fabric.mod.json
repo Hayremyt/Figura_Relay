@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "figura_relay",
+  "version": "${version}",
+  "name": "Figura Relay",
+  "description": "Companion mod for Figura: avatar relay through the game server. Patches Figura on the client, acts as relay on the server.",
+  "authors": ["Figura Relay"],
+  "contact": {},
+  "license": "AGPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.figurarelay.fabric.FiguraRelayFabric"
+    ],
+    "client": [
+      "org.figurarelay.fabric.FiguraRelayClientFabric"
+    ]
+  },
+  "mixins": [
+    "figura-relay.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-networking-api-v1": "*",
+    "fabric-lifecycle-events-v1": "*",
+    "fabric-command-api-v2": "*",
+    "minecraft": ">=1.21"
+  },
+  "recommends": {
+    "figura": "*"
+  }
+}

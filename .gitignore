@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+
+# Vendored compile-time dependency (downloaded in CI, see workflows)
+.libs/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+bin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Run dirs
+run/
+runs/

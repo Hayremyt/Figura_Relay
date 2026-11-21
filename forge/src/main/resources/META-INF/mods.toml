@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[4.0,)"
+license="AGPL-3.0"
+
+[[mods]]
+modId="figura_relay"
+version="${version}"
+displayName="Figura Relay"
+description="Companion mod for Figura: avatar relay through the game server. Patches Figura on the client, acts as relay on the server."
+
+[[mixins]]
+config = "figura-relay.mixins.json"
+
+[[dependencies.figura_relay]]
+    modId="forge"
+    type="required"
+    versionRange="[52.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.figura_relay]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1,1.22)"
+    ordering="NONE"
+    side="BOTH"
+
+# Figura itself is only required on the client (for patching).
+# On a dedicated server the relay works standalone.
+[[dependencies.figura_relay]]
+    modId="figura"
+    type="required"
+    versionRange="[0.1.6,)"
+    ordering="AFTER"
+    side="CLIENT"
